@@ -21,6 +21,7 @@
   const updateMethod = url + "updateUser"
   const searchMethod = url + "getUser"
   const checkMethod= url + "checkLoginName"
+  const delAllMethod= url + "delAll"
 
   var userCount = 0;
 
@@ -48,7 +49,7 @@
         var sex = arr[i].sex == "1"? "男":"女";
         
          $("#table1").append(
-           "<tr><td><input type='checkbox' name='ck' value="+arr[i].id+"/></td>"
+           "<tr><td><input type='checkbox' name='ck' value='"+arr[i].id+"'/></td>"
            +"<td>"+arr[i].name+"</td>"
             +"<td>"+arr[i].age+"</td>"
             +"<td>"+arr[i].loginName+"</td>"
@@ -297,6 +298,36 @@ function nextPage(){ // 整体思路：判断当前页是否为最大页数，�
 
 		}
 
+  function delAll(){
+      var ck = $("input:checked[name='ck']");
+      if(ck.length == 0){
+          alert("请选择,然后进行删除");
+          return;
+      }
+      var f=confirm("确认删除!!");
+      if(!f){
+          return;
+      }
+      var arr=[];//用于存要删除的选中的id值
+      for(var i = 0; i < ck.length; i++){
+          arr.push(ck[i].value);
+      }
+      $.ajax({
+          url:delAllMethod,
+          traditional:true,
+          type:"post",
+          data:{ids:arr},
+          success:function (data) {
+              if (data.delAll == "0"){
+                  alert("删除成功")
+              } else {
+                  alert("删除失败")
+              }
+              location.reload()
+          }
+      })
+  }
+
 </script>
 <style>
    tr:nth-child(odd) {
@@ -356,6 +387,7 @@ function nextPage(){ // 整体思路：判断当前页是否为最大页数，�
  <input type="button" value="模板下载" id="download" onclick="javascript:downloadFile();"/>
  <input type="file" id="file" onchange="inputFile();"/>
  <input type="button" value="导出" id="export" onclick="javascript:exportFile();"/>
+<input type="button" onclick="delAll()" value="批量删除" />
 
  
 </div><br>
@@ -403,6 +435,8 @@ function nextPage(){ // 整体思路：判断当前页是否为最大页数，�
  <option value="10"> 10 </option>
  <option value="15"> 15 </option>
  <option value="20"> 20 </option>
+ <option value="30"> 30 </option>
+ <option value="50"> 50 </option>
 </select>
 
 &nbsp;&nbsp;<input type="button" value="首页" onclick="javascript:fistPage();"/>
