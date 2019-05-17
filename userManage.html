@@ -291,7 +291,7 @@ function nextPage(){ // 整体思路：判断当前页是否为最大页数，�
   }
 
   function cheAll(){
-      var cek = $("#che")[0].checked;
+      var cek = $("#che").is(':checked');
        $("input[name='ck']").each(function () {
           this.checked = cek;
       });
