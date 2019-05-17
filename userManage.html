@@ -48,7 +48,8 @@
         var sex = arr[i].sex == "1"? "男":"女";
         
          $("#table1").append(
-           "<tr><td>"+arr[i].name+"</td>"
+           "<tr><td><input type='checkbox' name='ck' value="+arr[i].id+"/></td>"
+           +"<td>"+arr[i].name+"</td>"
             +"<td>"+arr[i].age+"</td>"
             +"<td>"+arr[i].loginName+"</td>"
             +"<td>"+arr[i].dept+"</td>"
@@ -288,6 +289,13 @@ function nextPage(){ // 整体思路：判断当前页是否为最大页数，�
     return true;
   }
 
+  function cheAll(){
+      var cek = $("#che")[0].checked;
+       $("input[name='ck']").each(function () {
+          this.checked = cek;
+      });
+
+		}
 
 </script>
 <style>
@@ -354,6 +362,7 @@ function nextPage(){ // 整体思路：判断当前页是否为最大页数，�
  <table id="table1" style=text-align:center border="1"  width="600" heigth="100" align="center">
   <input type="hidden" id="count" name="count" /> <!--放到公共区域，以便读取-->
    <tr>
+     <th><input type="checkbox" onclick="cheAll()" id="che"></th>
      <th> 姓名 </th>
      <th> 年龄 </th>
      <th> 登录名 </th>
