@@ -271,7 +271,8 @@ function nextPage(){ // 整体思路：判断当前页是否为最大页数，�
   }
 
   function exportFile(){
-   location.href="http://localhost:8080/uploadExcel/export";
+      $("#serchUser").attr('action',"http://localhost:8080/uploadExcel/export");
+      $("#serchUser").submit();
   }
 
  //JS校验input表单信息
