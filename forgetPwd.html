@@ -23,6 +23,7 @@
             }else {
                 $("#mail").attr("readonly","true")
                 $("#mail").css("background","#CCCCCC")
+                setTimeResend();
             }
           }
       })
@@ -65,8 +66,24 @@
           }
       })
   }
-    
-  
+
+
+
+  function setTimeResend() {
+      var count = 10;
+      var countdown = setInterval(CountDown, 1000);
+      function CountDown() {
+          $("#mailbutton").css("background-color", "#CCCCCC")
+          $("#mailbutton").attr("disabled", true);
+          $("#mailbutton").val( count + "s");
+          if (count == 0) {
+              $("#mailbutton").val("重新发送").removeAttr("disabled");
+              $("#mailbutton").css("background-color", "#4CAF50")
+              clearInterval(countdown);
+          }
+          count--;
+      }
+  }
 
 
 </script>
