@@ -14,6 +14,14 @@
 <script>
   function sendEmail() {
       $("#mailErrMsg").text("")
+      var mail = $("#mail").val()
+      var reg = /[a-zA-Z0-9]{1,12}@[a-zA-Z0-9]{1,4}.com/
+      var flag = reg.test(mail)
+      if(!flag){
+        $("#mailErrMsg").text("邮箱不正确！")
+        return;
+      }
+
       $.ajax({
           url: "http://localhost:8080/user/sendMail",
           data: {mail:$("#mail").val()},
@@ -49,6 +57,21 @@
   }
 
   function submitNewPwd() {
+      var newPwd = $("#newPwd").val()
+      if (newPwd.length == 0){
+          $("#pwdErrMsg").text("请输入新密码！")
+          return;
+      }
+      var newPwd1 = $("#newPwd1").val()
+      if (newPwd1.length == 0){
+          $("#pwdErrMsg").text("请确认密码！")
+          return;
+      }
+      if(newPwd != newPwd1){
+        $("#pwdErrMsg").text("密码不一致！")
+        return;
+      }
+
       $.ajax({
           url:"http://localhost:8080/user/changePwd",
           data: {
@@ -127,9 +150,9 @@ div {
           <input type="button" value="确定" onclick="javascript:submitCode();"/>
       <span id="codeErrMsg" style=color:red></span><br>
 </div>
-<div id="pwdDiv" style=text-align:center;display:none>
+<div id="pwdDiv" style=text-align:center;display:none >
   新&nbsp;密&nbsp;码&nbsp;&nbsp;<input type="password" name="newPwd" placeholder="请输入新密码" id="newPwd"/><br><br>
-  确认密码&nbsp;<input type="password"  placeholder="请确认密码" /><br>
+  确认密码&nbsp;<input type="password"  placeholder="请确认密码" id="newPwd1"/><br>
   <input type="button" value="确定" id="confirmOn" onclick="javascript:submitNewPwd();"/>
     <span id="pwdErrMsg" style=color:red></span><br>
 </div>
